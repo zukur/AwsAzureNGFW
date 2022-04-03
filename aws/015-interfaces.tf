@@ -29,6 +29,21 @@ resource "aws_network_interface_sg_attachment" "jumpboox_mgmt_attachment" {
   network_interface_id = aws_network_interface.jumpbox-mgmt.id
 }
 
+resource "aws_network_interface" "linuxsrv-nic-mgmt" {
+  description       = "linuxsrv-nic"
+  subnet_id         = aws_subnet.subnet_jumpbox-3a.id
+  source_dest_check = false
+  private_ips = ["10.42.4.101"]
+  tags = {
+      Name = "linuxsrv-nic"
+  }
+}
+
+resource "aws_network_interface_sg_attachment" "linuxsrv-nic_attachment" {
+  security_group_id    = aws_security_group.allow_all.id
+  network_interface_id = aws_network_interface.linuxsrv-nic-mgmt.id
+}
+
 resource "aws_network_interface" "oobjumpbox-mgmt" {
   description       = "oobjumpbox-nic"
   subnet_id         = aws_subnet.subnet_oobmgmt-3a.id
