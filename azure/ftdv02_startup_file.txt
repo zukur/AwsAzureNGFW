@@ -1,0 +1,9 @@
+#Sensor
+{
+  "AdminPassword": "${password}",
+  "Hostname":       "azftdv02",
+  "ManageLocally":  "No",
+  "FmcIp":          "${fmc_ip}",
+  "FmcRegKey":      "cisco123",
+  "FmcNatId":       "azftdv02"
+}

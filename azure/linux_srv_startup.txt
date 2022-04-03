@@ -1,0 +1,6 @@
+#!/bin/sh
+apt update
+apt install -y apache2
+echo "Hello!" > /var/www/html/index.html
+system start apache2
+system enable apache2
