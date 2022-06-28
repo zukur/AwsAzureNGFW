@@ -1,3 +1,6 @@
+###################################################
+#### Select FMCv Image (AMI) to be used
+###################################################
 data "aws_ami" "fmcv" {
   most_recent = true
   owners = ["aws-marketplace"]
@@ -13,6 +16,9 @@ data "aws_ami" "fmcv" {
   }
 }
 
+###################################################
+#### Select FTDv Image (AMI) to be used
+###################################################
 data "aws_ami" "ftd" {
   most_recent = true
   owners = ["aws-marketplace"]
@@ -28,20 +34,9 @@ data "aws_ami" "ftd" {
   }
 }
 
-data "template_file" "fmc_startup" {
-    template = file("fmc_startup_file.txt")
-    vars = {
-      "password" = var.password
-    }
-}
-
-data "template_file" "ftdv01_startup" {
-    template = file("ftdv01_startup_file.txt")
-    vars = {
-      "password" = var.password
-    }
-}
-
+###################################################
+#### Deploy FMCv
+###################################################
 resource "aws_instance" "fmcv" {
   ami           = data.aws_ami.fmcv.id
   instance_type = "c5.4xlarge"
@@ -52,13 +47,16 @@ resource "aws_instance" "fmcv" {
     device_index = 0
   }
 
-  user_data = data.template_file.fmc_startup.rendered
+  user_data = templatefile("fmc_startup_file.txt", {password = var.password})
 
   tags = {
     Name = "FMCv"
   }
 }
 
+###################################################
+#### Deploy FTDv
+###################################################
 resource "aws_instance" "ftdv01" {
   ami           = data.aws_ami.ftd.id
   instance_type = "c5.xlarge"
@@ -80,7 +78,7 @@ resource "aws_instance" "ftdv01" {
     device_index = 3
   }
 
-  user_data = data.template_file.ftdv01_startup.rendered
+  user_data = templatefile("ftdv01_startup_file.txt", {password = var.password})
 
   tags = {
     Name = "FTDv01"

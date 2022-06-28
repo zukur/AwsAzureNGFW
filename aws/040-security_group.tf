@@ -1,3 +1,6 @@
+###################################################
+#### Create Security Groups
+###################################################
 resource "aws_security_group" "allow_all" {
   name        = "Allow All"
   description = "Allow all traffic"

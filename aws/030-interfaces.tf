@@ -1,4 +1,6 @@
-#interfaces + sg assignment
+###################################################
+#### Create Interfaces and assign Security Groups
+###################################################
 resource "aws_network_interface" "fmc-mgmt" {
   description       = "fmc-mgmt"
   subnet_id         = aws_subnet.subnet_management-3a.id
@@ -120,7 +122,9 @@ resource "aws_network_interface_sg_attachment" "ftdv01-diag_attachment" {
   network_interface_id = aws_network_interface.ftdv01-diag.id
 }
 
-#Public IP addresses
+###################################################
+#### Create Public IP addresses
+###################################################
 resource "aws_eip" "oobjumpbox-eip" {
   vpc                       = true
   network_interface         = aws_network_interface.oobjumpbox-mgmt.id

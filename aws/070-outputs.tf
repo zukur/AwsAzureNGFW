@@ -1,3 +1,6 @@
+###################################################
+#### Print outputs to the console
+###################################################
 output "oobjumpbox_Administrator_Password" {
    value = rsadecrypt(aws_instance.oobjumpbox.password_data,file("bth.pem.prv"))
  }

@@ -1,4 +1,6 @@
-# Create internal load balancer
+###################################################
+#### Create Internal Load Balancer
+###################################################
 resource "azurerm_lb" "ILB" {
   name                = "ILB-${var.pod_name}"
   location            = azurerm_resource_group.rg.location
@@ -13,7 +15,9 @@ resource "azurerm_lb" "ILB" {
   }
 }
 
-# Create lb probe
+###################################################
+#### Create LB probe
+###################################################
 resource "azurerm_lb_probe" "ILB-probe-ssh" {
   loadbalancer_id = azurerm_lb.ILB.id
   name = "SSH-probe-${var.pod_name}"
@@ -21,6 +25,9 @@ resource "azurerm_lb_probe" "ILB-probe-ssh" {
   protocol = "Tcp"
 }
 
+###################################################
+#### Create LB backend pool
+###################################################
 resource "azurerm_lb_backend_address_pool" "ILB-FW" {
   name = "ILB-FW-${var.pod_name}"
   loadbalancer_id = azurerm_lb.ILB.id 
@@ -40,6 +47,9 @@ resource "azurerm_lb_backend_address_pool_address" "ILB-FW-FTDV02" {
   ip_address = "10.41.2.11"
 }
 
+###################################################
+#### Create LB rule
+###################################################
 resource "azurerm_lb_rule" "ILB-FW" {
   loadbalancer_id = azurerm_lb.ILB.id
   name = "ILB-FW-${var.pod_name}"

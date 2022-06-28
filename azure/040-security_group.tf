@@ -1,5 +1,6 @@
-# Create Network Security Group and rule
-
+###################################################
+#### Create Security Groups
+###################################################
 resource "azurerm_network_security_group" "nsg" {
   name                = "sg-AllowSome-${var.pod_name}"
   location            = azurerm_resource_group.rg.location
